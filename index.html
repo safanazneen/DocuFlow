@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DocuFlow – Live Demo</title>
+<style>
+:root{--bg:#f6f7fb;--sf:#fff;--ink:#111732;--mu:#5d6482;--ln:#dfe2ee;--ac:#5b4bdb;--ok:#1f9d8f;--wn:#b97614;--er:#c8453d;--tint:#eceafc;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1226;--sf:#171c38;--ink:#eef0fb;--mu:#9aa1c4;--ln:#2a3158;--ac:#8b7dff;--ok:#3cc4b4;--wn:#f2a444;--er:#ef7a72;--tint:#242a52;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1226;--sf:#171c38;--ink:#eef0fb;--mu:#9aa1c4;--ln:#2a3158;--ac:#8b7dff;--ok:#3cc4b4;--wn:#f2a444;--er:#ef7a72;--tint:#242a52;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,-apple-system,Arial,sans-serif}
+main{max-width:1100px;margin:0 auto;padding:22px 16px 48px}
+h1{font:700 28px/1.2 Georgia,serif;margin:0}h2{font:600 19px/1.3 Georgia,serif;margin:0 0 10px}
+.mu{color:var(--mu)}.sm{font-size:13px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0}
+nav button{flex:1 1 130px;text-align:left;font:inherit;border:1px solid var(--ln);background:var(--sf);color:var(--ink);padding:9px 12px;border-radius:8px;cursor:pointer}
+nav button b{display:block;font-size:14px}nav button span{font-size:12px;color:var(--mu)}
+nav button[aria-selected="true"]{border-color:var(--ac);box-shadow:inset 0 -3px 0 var(--ac)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+section.p{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:20px}
+section.p[hidden]{display:none}
+.f{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:720px){.f,.two{grid-template-columns:1fr!important}}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:3px}
+input,textarea,select{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--ln);border-radius:7px;background:var(--bg);color:var(--ink)}
+textarea{resize:vertical;min-height:70px}
+.b{font:inherit;font-weight:600;border:0;background:var(--ac);color:#fff;padding:8px 16px;border-radius:7px;cursor:pointer}
+.b.s{background:var(--tint);color:var(--ac)}.b:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.t{border:1px solid var(--ln);border-radius:8px;padding:11px;background:var(--bg)}
+.t label{display:flex;gap:8px;align-items:flex-start;font-weight:600;cursor:pointer}.t input{width:auto;margin-top:4px}
+.t small{display:block;color:var(--mu);font-weight:400}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ed{min-height:380px;font:13px/1.5 Consolas,Menlo,monospace;white-space:pre}
+.pv{border:1px solid var(--ln);border-radius:7px;padding:4px 16px;min-height:380px;overflow:auto;max-height:520px;background:var(--bg)}
+.pv h1,.pv h2,.pv h3{font-family:Georgia,serif}.pv code{background:var(--tint);padding:1px 5px;border-radius:4px}
+.pv pre{background:var(--tint);padding:10px;border-radius:6px;overflow:auto}.pv a,.lk{color:var(--ac)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button{font:inherit;font-size:13px;border:1px solid var(--ln);background:var(--bg);color:var(--ink);padding:4px 11px;border-radius:99px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--ac);color:#fff;border-color:var(--ac)}
+.tag{display:inline-block;padding:1px 9px;border-radius:99px;font-size:12px;font-weight:700}
+.pass{background:rgba(31,157,143,.16);color:var(--ok)}.fail{background:rgba(200,69,61,.14);color:var(--er)}.skip{background:rgba(185,118,20,.16);color:var(--wn)}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--ln);vertical-align:top}th{color:var(--mu);font-size:13px}
+pre.c{background:var(--bg);border:1px solid var(--ln);border-radius:7px;padding:12px;overflow:auto;font-size:12.5px;max-height:340px;margin:0}
+.note{border-left:4px solid var(--wn);background:var(--bg);padding:9px 13px;border-radius:0 8px 8px 0;font-size:14px;margin-top:12px}
+.st{list-style:none;padding:0;margin:12px 0}.st li{padding:6px 0;border-bottom:1px solid var(--ln)}
+</style>
+</head>
+<body>
+<main>
+<h1>DocuFlow live demo</h1>
+<p class="mu">Walk through the workflow: describe a project, generate Markdown, edit with live preview, validate, then prepare the GitHub pull request.</p>
+<nav id="nav" role="tablist"></nav>
+
+<section class="p" id="s0">
+<h2>1. Describe your project</h2>
+<div class="f">
+<div><label for="pn">Project name</label><input id="pn" value="Campus Event Planner"></div>
+<div><label for="dv">Developer</label><input id="dv" value="Your Name"></div>
+<div style="grid-column:1/-1"><label for="ds">Description</label><textarea id="ds">A web app that helps student clubs plan events, sell tickets and track attendance.</textarea></div>
+<div><label for="tc">Technology stack (one per line)</label><textarea id="tc">React
+FastAPI
+SQLite</textarea></div>
+<div><label for="rq">Installation requirements (one per line)</label><textarea id="rq">Python 3.12
+Node.js LTS
+Git</textarea></div>
+<div><label for="ft">Features (one per line)</label><textarea id="ft">Event creation and scheduling
+Ticket sales
+Attendance tracking</textarea></div>
+<div><label for="us">Usage instructions</label><textarea id="us">Start the backend, start the frontend, then open the app in your browser and sign in.</textarea></div>
+<div style="grid-column:1/-1"><label for="ru">Repository URL</label><input id="ru" value="https://github.com/your-name/campus-event-planner"></div>
+</div>
+<div class="row"><button class="b" id="to1">Continue to templates</button></div>
+</section>
+
+<section class="p" id="s1" hidden>
+<h2>2. Choose templates and generate</h2>
+<div class="tg" id="tg"></div>
+<div class="row"><button class="b" id="gen">Generate Markdown</button><span class="sm mu" id="genmsg"></span></div>
+</section>
+
+<section class="p" id="s2" hidden>
+<h2>3. Edit with live preview</h2>
+<div class="tabs" id="dtabs"></div>
+<div class="two"><div><label for="ed">Markdown</label><textarea id="ed" class="ed" spellcheck="false"></textarea></div><div><label>Preview (HTML escaped before rendering)</label><div class="pv" id="pv"></div></div></div>
+<div class="row"><button class="b s" id="copy">Copy Markdown</button><button class="b s" id="inject">Insert test errors</button><span class="sm mu" id="edmsg"></span></div>
+</section>
+
+<section class="p" id="s3" hidden>
+<h2>4. Validate</h2>
+<p class="mu sm">These checks run in your browser on the text above: a subset of Markdownlint rules plus a local link check. Web URLs need network access, so the demo lists them as not checked; Lychee checks them in GitHub Actions.</p>
+<div class="row"><button class="b" id="val">Run validation</button><span id="vsum"></span></div>
+<div id="vout"></div>
+</section>
+
+<section class="p" id="s4" hidden>
+<h2>5. Publish through a pull request</h2>
+<div class="f"><div><label for="rp">Repository (owner/name)</label><input id="rp" value="your-name/campus-event-planner"></div><div><label for="bb">Base branch</label><input id="bb" value="main"></div></div>
+<div class="row"><button class="b" id="pub">Prepare pull request</button></div>
+<div class="note"><b>Simulated step.</b> This page cannot call GitHub. It shows exactly what the full DocuFlow backend would send: branch, commits, pull request text and the generated workflow files.</div>
+<ul class="st" id="pst"></ul>
+<div id="pout"></div>
+</section>
+</main>
+<script>
+const $=i=>document.getElementById(i);
+const TPL=[
+["readme","README.md","README.md","Project introduction and navigation","# {{ project_name }}\n\n{{ description }}\n\n## Technology stack\n\n{{ tech }}\n\n## Getting started\n\nRead the [Installation Guide](installation.md) and the [Features](features.md) page.\n\nRepository: {{ repo }}\n\nMaintained by {{ developer }}.\n"],
+["install","Installation Guide","installation.md","Prerequisites and setup","# Installation\n\n## Requirements\n\n{{ requirements }}\n\n## Get the code\n\n```bash\ngit clone {{ repo_url }}\n```\n\n## Run\n\n{{ usage }}\n"],
+["features","Features","features.md","What the project can do","# Features\n\n{{ project_name }} provides:\n\n{{ features }}\n"],
+["api","API Documentation","api.md","Endpoints and examples","# API reference\n\n{{ project_name }} exposes a REST API.\n\n## Example\n\n```http\nGET /api/items\n```\n\nReturns a JSON list. Add your endpoints under this heading.\n"],
+["contrib","Contributing Guide","contributing.md","Workflow for contributors","# Contributing\n\nThanks for helping with {{ project_name }}.\n\n1. Fork the repository.\n2. Create a branch.\n3. Commit your changes.\n4. Open a pull request.\n\nContact: {{ developer }}\n"],
+["change","Changelog","changelog.md","Release history","# Changelog\n\n## Unreleased\n\n- Initial documentation for {{ project_name }}.\n"],
+["guide","User Guide","user-guide.md","How to use the application","# User guide\n\n## Using {{ project_name }}\n\n{{ usage }}\n\n## Main capabilities\n\n{{ features }}\n"],
+["over","Project Overview","overview.md","Purpose and components","# Overview\n\n{{ description }}\n\n## Built with\n\n{{ tech }}\n\nSee also: [Features](features.md).\n"]];
+let docs=[],cur=0,hist=[];
+const bl=t=>t.split("\n").map(s=>s.trim()).filter(Boolean).map(s=>"- "+s).join("\n");
+function fill(b){const v={project_name:$("pn").value.trim()||"Untitled",description:$("ds").value.trim(),tech:bl($("tc").value),requirements:bl($("rq").value),features:bl($("ft").value),usage:$("us").value.trim(),developer:$("dv").value.trim(),repo_url:$("ru").value.trim(),repo:$("ru").value.trim()?"["+$("ru").value.trim()+"]("+$("ru").value.trim()+")":"not set"};return b.replace(/\{\{\s*(\w+)\s*\}\}/g,(m,k)=>v[k]??m)}
+const STEPS=[["Project","Enter details"],["Templates","Generate files"],["Editor","Live preview"],["Validate","Lint and links"],["Publish","Pull request"]];
+function show(n){STEPS.forEach((_,i)=>{$("s"+i).hidden=i!==n;$("nav").children[i].setAttribute("aria-selected",i===n)});if(n===2)loadDoc();if(n===3)$("vout").innerHTML=$("vout").innerHTML}
+$("nav").innerHTML=STEPS.map((s,i)=>`<button role="tab" data-i="${i}"><b>${i+1}. ${s[0]}</b><span>${s[1]}</span></button>`).join("");
+$("nav").onclick=e=>{const b=e.target.closest("button");if(!b)return;const i=+b.dataset.i;if(i>=2&&!docs.length){$("genmsg").textContent="Generate at least one file first.";show(1);return}show(i)};
+$("to1").onclick=()=>show(1);
+$("tg").innerHTML=TPL.map((t,i)=>`<div class="t"><label><input type="checkbox" value="${i}" ${i<3?"checked":""}><span>${t[1]}<small>${t[3]} · ${t[2]}</small></span></label></div>`).join("");
+$("gen").onclick=()=>{const sel=[...$("tg").querySelectorAll("input:checked")].map(x=>TPL[+x.value]);if(!sel.length){$("genmsg").textContent="Select at least one template.";return}
+docs=sel.map(t=>({name:t[2],content:fill(t[4]),orig:fill(t[4])}));cur=0;$("genmsg").textContent=docs.length+" files generated.";show(2)};
+function esc(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function inl(t){return esc(t).replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>").replace(/\[([^\]]*)\]\(([^)\s]*)\)/g,(m,a,u)=>/^https?:\/\/[^"'<>]+$/.test(u)?`<a href="${u}" target="_blank" rel="noopener noreferrer">${a}</a>`:u?`<span class="lk">${a}</span>`:m)}
+function md(s){let h="",code=false,list=null;const cl=()=>{if(list){h+=`</${list}>`;list=null}};
+for(const l of s.split("\n")){if(l.startsWith("```")){cl();h+=code?"</pre>":"<pre>";code=!code;continue}
+if(code){h+=esc(l)+"\n";continue}let m;
+if(m=l.match(/^(#{1,6})\s+(.*)/)){cl();h+=`<h${m[1].length}>${inl(m[2])}</h${m[1].length}>`}
+else if(m=l.match(/^[-*]\s+(.*)/)){if(list!=="ul"){cl();h+="<ul>";list="ul"}h+=`<li>${inl(m[1])}</li>`}
+else if(m=l.match(/^\d+\.\s+(.*)/)){if(list!=="ol"){cl();h+="<ol>";list="ol"}h+=`<li>${inl(m[1])}</li>`}
+else if(l.trim()===""){cl()}else{cl();h+=`<p>${inl(l)}</p>`}}
+cl();if(code)h+="</pre>";return h}
+function loadDoc(){$("dtabs").innerHTML=docs.map((d,i)=>`<button aria-pressed="${i===cur}" data-i="${i}">${d.name}${d.content!==d.orig?" •":""}</button>`).join("");$("ed").value=docs[cur].content;$("pv").innerHTML=md(docs[cur].content)}
+$("dtabs").onclick=e=>{const b=e.target.closest("button");if(b){cur=+b.dataset.i;loadDoc()}};
+$("ed").oninput=()=>{docs[cur].content=$("ed").value;$("pv").innerHTML=md($("ed").value);const b=$("dtabs").children[cur];b.textContent=docs[cur].name+(docs[cur].content!==docs[cur].orig?" •":"");$("edmsg").textContent="Edited. Changes stay in this page until you leave it."};
+$("copy").onclick=async()=>{try{await navigator.clipboard.writeText($("ed").value);$("edmsg").textContent="Copied."}catch(e){$("ed").select();$("edmsg").textContent="Select and copy manually."}};
+$("inject").onclick=()=>{docs[cur].content="Intro without a title   \n\n\n### Skipped a level\n\nSee [missing page](nowhere.md) and [empty]().";loadDoc();$("edmsg").textContent="Test errors inserted in "+docs[cur].name+". Run validation to see them fail."};
+function lint(d,names){const L=d.content.split("\n"),out=[];let prev=0,blank=0,inC=false,first=true;
+L.forEach((l,i)=>{const n=i+1;if(l.startsWith("```")){inC=!inC;return}
+if(/ +$/.test(l))out.push(["MD009",n,"Trailing spaces"]);
+if(l.trim()===""){blank++;if(blank===2)out.push(["MD012",n,"Multiple blank lines"]);return}blank=0;
+if(inC)return;const h=l.match(/^(#{1,6})\s/);
+if(first){first=false;if(!h||h[1].length!==1)out.push(["MD041",n,"First line should be a level 1 heading"])}
+if(h){const lv=h[1].length;if(prev&&lv>prev+1)out.push(["MD001",n,"Heading jumps from level "+prev+" to "+lv]);prev=lv}
+for(const m of l.matchAll(/\[[^\]]*\]\(([^)]*)\)/g)){const u=m[1].trim();
+if(!u)out.push(["LINK",n,"Link has an empty target"]);
+else if(/^https?:\/\//.test(u))out.push(["WEB",n,u]);
+else if(!/^(#|mailto:)/.test(u)){const f=u.split("#")[0];if(!names.includes(f))out.push(["LINK",n,"Target not in project: "+f])}}});
+if(!d.content.endsWith("\n"))out.push(["MD047",L.length,"File should end with a newline"]);return out}
+$("val").onclick=()=>{const names=docs.map(d=>d.name);let err=0,web=0,rows="";
+docs.forEach(d=>{const r=lint(d,names);const e=r.filter(x=>x[0]!=="WEB"),w=r.filter(x=>x[0]==="WEB");err+=e.length;web+=w.length;
+rows+=`<tr><td>${esc(d.name)}</td><td><span class="tag ${e.length?"fail":"pass"}">${e.length?"Failed":"Passed"}</span></td><td>${e.map(x=>`<div>${x[0]} line ${x[1]}: ${esc(x[2])}</div>`).join("")||"No issues"}${w.length?`<div class="sm mu">${w.length} web link(s) not checked (need network)</div>`:""}</td></tr>`});
+const ok=err===0;hist.unshift({t:new Date().toLocaleTimeString(),ok,err});
+$("vsum").innerHTML=`<span class="tag ${ok?"pass":"fail"}">${ok?"All checks passed":err+" issue(s) found"}</span>`;
+$("vout").innerHTML=`<table><thead><tr><th>File</th><th>Status</th><th>Findings</th></tr></thead><tbody>${rows}</tbody></table><h2 style="margin-top:18px">History</h2><table><tbody>${hist.map(h=>`<tr><td>${h.t}</td><td><span class="tag ${h.ok?"pass":"fail"}">${h.ok?"Passed":"Failed"}</span></td><td>${h.err} issue(s)</td></tr>`).join("")}</tbody></table>`};
+const VY=`name: Validate Documentation\non:\n  push:\n    branches: [ main ]\n  pull_request:\njobs:\n  lint-and-links:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: "lts/*"\n      - name: Markdown lint\n        run: npx markdownlint-cli "**/*.md" --ignore node_modules\n      - name: Link check\n        uses: lycheeverse/lychee-action@v2\n        with:\n          args: --no-progress "**/*.md"\n          fail: true\n`;
+const DY=`name: Deploy Documentation\non:\n  push:\n    branches: [ main ]\npermissions:\n  contents: read\n  pages: write\n  id-token: write\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-python@v5\n        with:\n          python-version: "3.12"\n      - run: pip install mkdocs mkdocs-material\n      - run: mkdocs build --strict\n      - uses: actions/upload-pages-artifact@v3\n        with:\n          path: site\n  deploy:\n    needs: build\n    runs-on: ubuntu-latest\n    environment:\n      name: github-pages\n    steps:\n      - uses: actions/deploy-pages@v4\n`;
+$("pub").onclick=()=>{const rp=$("rp").value.trim(),bb=$("bb").value.trim()||"main";
+if(!/^[\w.-]+\/[\w.-]+$/.test(rp)){$("pst").innerHTML="<li><span class='tag fail'>Error</span> Enter the repository as owner/name.</li>";return}
+const last=hist[0];const warn=!last?"Validation has not been run yet.":!last.ok?"The last validation failed. On GitHub, the same checks would block this pull request.":"";
+const nav=docs.map(d=>`  - ${d.name.replace(/\.md$/,"")}: ${d.name}`).join("\n");
+const files={"mkdocs.yml":`site_name: ${$("pn").value.trim()||"Docs"} Documentation\ntheme:\n  name: material\nnav:\n  - Home: index.md\n${nav}\n`,".github/workflows/validate.yml":VY,".github/workflows/deploy.yml":DY};
+docs.forEach(d=>files["docs/"+d.name]=d.content);
+const br="docs/docuflow-update",steps=["Authorize with GitHub OAuth","Read branches of "+rp,"Create branch "+br+" from "+bb,"Commit "+Object.keys(files).length+" files (existing files would be updated with their SHA)","Open pull request into "+bb];
+$("pst").innerHTML="";$("pout").innerHTML="";let i=0;const tick=()=>{if(i<steps.length){$("pst").innerHTML+=`<li><span class="tag skip">Simulated</span> ${esc(steps[i])}</li>`;i++;setTimeout(tick,450)}else done()};
+function done(){const keys=Object.keys(files);$("pout").innerHTML=`${warn?`<div class="note">${warn}</div>`:""}<h2 style="margin-top:16px">Pull request preview</h2><p><b>Title:</b> docs: add documentation generated by DocuFlow<br><b>From:</b> ${br} <b>into</b> ${esc(bb)} in ${esc(rp)}</p><div class="tabs" id="ft2">${keys.map((k,j)=>`<button aria-pressed="${j===0}" data-k="${esc(k)}">${esc(k)}</button>`).join("")}</div><pre class="c" id="fv"></pre><p class="sm mu">After merging, the deploy workflow builds MkDocs and publishes to GitHub Pages. GitHub, not DocuFlow, confirms deployment.</p>`;
+const sv=k=>$("fv").textContent=files[k];sv(keys[0]);$("ft2").onclick=e=>{const b=e.target.closest("button");if(!b)return;$("ft2").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));sv(b.dataset.k)}}
+tick()};
+show(0);
+</script>
+</body>
+</html>

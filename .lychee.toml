@@ -1,0 +1,7 @@
+# Link checker configuration
+exclude = [
+  "http://127.0.0.1:8000",
+  "http://localhost:8000"
+]
+timeout = 20
+max_retries = 2

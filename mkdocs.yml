@@ -1,0 +1,23 @@
+site_name: DocuFlow
+site_description: Automated developer documentation portal
+site_url: ""
+repo_url: ""
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Installation: installation.md
+  - API Reference: api-reference.md
+  - Troubleshooting: troubleshooting.md
+  - FAQ: faq.md
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
